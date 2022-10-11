@@ -2,13 +2,10 @@ package com.example.ci_testing;
 
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,10 +15,9 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class MainPageTest {
-    private static WebDriver driver;
+    static WebDriver driver;
     private static String email;
     private static String password;
 
@@ -58,6 +54,7 @@ public class MainPageTest {
 
     @Test
     public void test1() {
+        System.out.println("run test1");
         performBuyShoppingListFlow("data1.txt");
     }
 
@@ -92,7 +89,7 @@ public class MainPageTest {
 
 
         // PERFORM CHECKOUT FLOW
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
 
         // Billing address
@@ -130,7 +127,7 @@ public class MainPageTest {
         driver.findElement(By.xpath(xpath)).click();
 
         String expectedCartQuantityXpath = String.format("//span[@class='cart-qty' and text() = '(%s)']", currentSize + 1);
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(expectedCartQuantityXpath)));
     }
 
@@ -148,9 +145,12 @@ public class MainPageTest {
     }
 
     private static void createSessionAndOpenSite() {
-        System.setProperty("webdriver.chrome.driver", "./chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/Users/audriussav/Downloads/chromedriver");
+        System.out.println("webdriver path set");
         driver = new ChromeDriver();
+        System.out.println("driver created");
 //        driver.manage().window().maximize();
         driver.get("https://demowebshop.tricentis.com/");
+        System.out.println("driver opened");
     }
 }
